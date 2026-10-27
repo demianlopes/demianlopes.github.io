@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Demian Lopes — Technology Governance &amp; Operations</title>
+<meta name="description" content="Demian Lopes — Technology &amp; Risk Leader. Technology operations, security compliance (SOC 2) and AI governance (ISO 42001) for financial institutions. British Columbia, Canada.">
+<meta property="og:title" content="Demian Lopes — Technology Governance &amp; Operations">
+<meta property="og:description" content="I make technology risk governable for regulated organizations.">
+<meta name="theme-color" content="#f4f3ef">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  /* color — one neutral ramp + one signal color */
+  --paper:#f4f3ef;      /* page */
+  --sheet:#ffffff;      /* raised */
+  --ink:#121417;        /* primary text   ~17:1 on paper */
+  --ink-2:#4a4f58;      /* secondary text ~7.9:1 on paper */
+  --ink-3:#62676f;      /* meta text      ~5.0:1 on paper */
+  --rule:#d9d6ce;       /* hairlines */
+  --signal:#b3361b;     /* Swiss vermilion ~5.6:1 on paper */
+  --signal-ink:#ffffff;
+
+  /* type — 1.25 major-third scale */
+  --f-display:"Inter Tight",Inter,system-ui,sans-serif;
+  --f-body:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --t-xs:.75rem; --t-sm:.875rem; --t-base:1rem; --t-md:1.125rem;
+  --t-lg:1.5rem; --t-xl:2rem; --t-2xl:clamp(2.25rem,5vw,3.25rem);
+  --t-hero:clamp(2.75rem,8.4vw,6rem);
+
+  /* space — 4px base, 8-step */
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --s7:48px; --s8:64px; --s9:96px; --s10:128px;
+
+  /* layout */
+  --max:1200px; --gutter:clamp(16px,4vw,40px); --radius:2px;
+
+  /* motion */
+  --ease:cubic-bezier(.2,.7,.2,1); --fast:160ms; --med:240ms;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0f1012; --sheet:#17191c; --ink:#efede8; --ink-2:#b4b7bd; --ink-3:#8d929b;
+    --rule:#2a2d32; --signal:#ff7a52; --signal-ink:#0f1012;
+  }
+}
+
+/* ============ BASE ============ */
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 var(--t-base)/1.6 var(--f-body);
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+h1,h2,h3{font-family:var(--f-display);font-weight:600;letter-spacing:-.02em;margin:0;text-wrap:balance}
+p{margin:0;text-wrap:pretty}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--signal);outline-offset:3px;border-radius:var(--radius)}
+.skip{position:absolute;left:var(--s4);top:-60px;background:var(--ink);color:var(--paper);padding:var(--s2) var(--s4);z-index:20;text-decoration:none;font-weight:600}
+.skip:focus{top:var(--s4)}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
+.mono{font-family:var(--f-mono);font-size:var(--t-xs);letter-spacing:.04em;text-transform:uppercase}
+.vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* 12-column grid */
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--s5)}
+@media (max-width:840px){ .grid{grid-template-columns:repeat(4,minmax(0,1fr));column-gap:var(--s4)} }
+
+/* ============ NAV ============ */
+.nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--paper) 92%,transparent);
+  backdrop-filter:saturate(1.4) blur(10px);-webkit-backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--rule)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:var(--s5);height:60px}
+.brand{font:700 var(--t-md)/1 var(--f-display);letter-spacing:-.02em;text-decoration:none;white-space:nowrap}
+.brand span{color:var(--signal)}
+.nav ul{display:flex;gap:var(--s1);list-style:none;margin:0;padding:0;overflow-x:auto;scrollbar-width:none}
+.nav ul::-webkit-scrollbar{display:none}
+.nav ul a{display:block;padding:10px var(--s3);font-size:var(--t-sm);font-weight:500;color:var(--ink-2);text-decoration:none;
+  border-radius:var(--radius);transition:color var(--fast) var(--ease),background-color var(--fast) var(--ease);white-space:nowrap}
+.nav ul a:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 6%,transparent)}
+.nav ul a[aria-current="true"]{color:var(--ink)}
+.nav .cta{background:var(--ink);color:var(--paper)!important}
+.nav .cta:hover{background:var(--signal)!important;color:var(--signal-ink)!important}
+.nav nav{min-width:0}
+@media (max-width:420px){ .nav .hide-xs{display:none} }
+@media (max-width:560px){ .nav .hide-sm{display:none} .nav ul a{padding:10px var(--s2)} .nav .cta{padding:10px var(--s3)} }
+
+/* ============ HERO ============ */
+.hero{padding:var(--s9) 0 var(--s8)}
+.hero .kicker{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:var(--s2) var(--s5);color:var(--ink-3);margin-bottom:var(--s6)}
+.hero .kicker .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--signal);margin-right:var(--s2);vertical-align:1px}
+.hero h1{grid-column:1/-1;font-size:var(--t-hero);line-height:.98;letter-spacing:-.035em;max-width:13ch}
+.hero h1 em{font-style:normal;color:var(--signal)}
+.hero .lede{grid-column:1/span 6;font-size:var(--t-md);color:var(--ink-2);margin-top:var(--s6);max-width:52ch}
+.hero .actions{grid-column:8/-1;align-self:end;display:flex;flex-wrap:wrap;gap:var(--s3);justify-content:flex-end}
+@media (max-width:840px){
+  .hero{padding:var(--s8) 0 var(--s7)}
+  .hero .lede{grid-column:1/-1}
+  .hero .actions{grid-column:1/-1;justify-content:flex-start;margin-top:var(--s6)}
+}
+.btn{display:inline-flex;align-items:center;gap:var(--s2);min-height:48px;padding:0 var(--s5);font:600 var(--t-sm)/1 var(--f-body);
+  text-decoration:none;border:1px solid var(--ink);border-radius:var(--radius);
+  transition:background-color var(--fast) var(--ease),color var(--fast) var(--ease),border-color var(--fast) var(--ease)}
+.btn .arr{transition:transform var(--fast) var(--ease)}
+.btn:hover .arr{transform:translateX(3px)}
+.btn.primary{background:var(--ink);color:var(--paper)}
+.btn.primary:hover{background:var(--signal);border-color:var(--signal);color:var(--signal-ink)}
+.btn.ghost:hover{background:var(--ink);color:var(--paper)}
+
+/* ledger strip */
+.ledger{border-top:1px solid var(--ink);border-bottom:1px solid var(--rule)}
+.ledger .grid > div{grid-column:span 3;padding:var(--s5) 0;border-right:1px solid var(--rule)}
+.ledger .grid > div:last-child{border-right:0}
+.ledger b{display:block;font:600 var(--t-xl)/1.1 var(--f-display);letter-spacing:-.02em;margin:var(--s2) 0 var(--s1)}
+.ledger small{display:block;font-size:var(--t-sm);color:var(--ink-2);padding-right:var(--s4)}
+.ledger .mono{color:var(--ink-3)}
+@media (max-width:840px){
+  .ledger .grid > div{grid-column:span 2}
+  .ledger .grid > div:nth-child(2){border-right:0}
+  .ledger .grid > div:nth-child(-n+2){border-bottom:1px solid var(--rule)}
+}
+
+/* ============ SECTIONS ============ */
+.section{padding:var(--s9) 0 0}
+.sec-head{align-items:end;margin-bottom:var(--s7)}
+.sec-head .num{grid-column:1/span 2;color:var(--signal)}
+.sec-head h2{grid-column:3/span 6;font-size:var(--t-2xl);line-height:1.05}
+.sec-head p{grid-column:9/-1;color:var(--ink-2);font-size:var(--t-sm)}
+@media (max-width:840px){
+  .section{padding:var(--s8) 0 0}
+  .sec-head .num,.sec-head h2,.sec-head p{grid-column:1/-1}
+  .sec-head h2{margin:var(--s3) 0}
+}
+
+/* ============ WORK ============ */
+.cases{border-top:1px solid var(--ink)}
+.case{border-bottom:1px solid var(--rule)}
+.case summary{list-style:none;cursor:pointer;padding:var(--s6) 0;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--s5);align-items:baseline;
+  transition:background-color var(--fast) var(--ease)}
+.case summary::-webkit-details-marker{display:none}
+.case summary:hover{background:color-mix(in srgb,var(--ink) 3%,transparent)}
+.case .idx{grid-column:1/span 1;color:var(--ink-3)}
+.case h3{grid-column:2/span 5;font-size:var(--t-lg);line-height:1.2}
+.case .outcome{grid-column:7/span 5;color:var(--ink-2)}
+.case .tog{grid-column:12/span 1;justify-self:end;width:32px;height:32px;border:1px solid var(--rule);border-radius:50%;display:grid;place-items:center;
+  transition:transform var(--med) var(--ease),background-color var(--fast) var(--ease),border-color var(--fast) var(--ease)}
+.case .tog::before,.case .tog::after{content:"";grid-area:1/1;width:12px;height:1.5px;background:currentColor}
+.case .tog::after{transform:rotate(90deg);transition:transform var(--med) var(--ease)}
+.case summary:hover .tog{border-color:var(--ink)}
+.case[open] .tog{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.case[open] .tog::after{transform:rotate(0)}
+.case .tags{grid-column:2/span 10;display:flex;flex-wrap:wrap;gap:var(--s2);margin-top:var(--s3)}
+.tag{display:inline-block;padding:3px var(--s2);border:1px solid var(--rule);border-radius:var(--radius);color:var(--ink-2);background:var(--sheet)}
+.sdr{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--s5);padding:0 0 var(--s7)}
+.sdr > div{grid-column:span 3;border-top:2px solid var(--ink);padding-top:var(--s3)}
+.sdr > div:first-child{grid-column:2/span 3}
+.sdr h4{margin:0 0 var(--s2);color:var(--signal)}
+.sdr p{font-size:var(--t-sm);color:var(--ink-2)}
+.case[open] .sdr{animation:drop var(--med) var(--ease)}
+@keyframes drop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+@media (max-width:840px){
+  .case summary{grid-template-columns:auto 1fr auto;column-gap:var(--s4);padding:var(--s5) 0}
+  .case .idx{grid-column:1}
+  .case h3{grid-column:2;font-size:var(--t-md)}
+  .case .tog{grid-column:3;grid-row:1}
+  .case .outcome{grid-column:2/-1;margin-top:var(--s2);font-size:var(--t-sm)}
+  .case .tags{grid-column:2/-1}
+  .sdr{grid-template-columns:1fr;row-gap:var(--s5);padding:0 0 var(--s6)}
+  .sdr > div,.sdr > div:first-child{grid-column:1}
+}
+
+/* ============ CAPABILITY MATRIX ============ */
+.matrix{border-top:1px solid var(--ink)}
+.row{padding:var(--s5) 0;border-bottom:1px solid var(--rule);align-items:baseline}
+.row h3{grid-column:1/span 4;font-size:var(--t-md)}
+.row .mono{grid-column:5/span 2;color:var(--ink-3)}
+.row ul{grid-column:7/-1;list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:var(--s2)}
+.row li{font-size:var(--t-sm);padding:var(--s1) var(--s3);background:var(--sheet);border:1px solid var(--rule);border-radius:var(--radius)}
+.matrix-foot{margin-top:var(--s4);font-size:var(--t-sm);color:var(--ink-3)}
+.matrix-foot a{color:var(--ink);text-underline-offset:3px}
+@media (max-width:840px){
+  .row h3,.row .mono,.row ul{grid-column:1/-1}
+  .row .mono{margin:var(--s1) 0 var(--s3)}
+}
+
+/* ============ CONVICTIONS ============ */
+.beliefs{counter-reset:b}
+.belief{grid-column:span 4;border-top:1px solid var(--ink);padding-top:var(--s4)}
+.belief .mono{color:var(--signal)}
+.belief h3{font-size:var(--t-lg);line-height:1.2;margin:var(--s3) 0}
+.belief p{color:var(--ink-2);font-size:var(--t-sm);max-width:40ch}
+@media (max-width:840px){ .belief{grid-column:1/-1;margin-bottom:var(--s6)} }
+
+/* ============ BUILDS ============ */
+.builds{gap:var(--s5)}
+.build{grid-column:span 4;background:var(--sheet);border:1px solid var(--rule);border-radius:var(--radius);padding:var(--s5);display:flex;flex-direction:column;gap:var(--s3);
+  transition:border-color var(--fast) var(--ease),transform var(--med) var(--ease)}
+.build:hover{border-color:var(--ink);transform:translateY(-2px)}
+.build .mono{color:var(--ink-3)}
+.build h3{font-size:var(--t-md)}
+.build p{font-size:var(--t-sm);color:var(--ink-2);flex:1}
+.build .stack{display:flex;flex-wrap:wrap;gap:var(--s1) var(--s2);padding-top:var(--s3);border-top:1px solid var(--rule)}
+.build .stack .mono{color:var(--ink-2)}
+@media (max-width:840px){ .build{grid-column:1/-1} }
+.builds-note{margin-top:var(--s5);font-size:var(--t-sm);color:var(--ink-3);max-width:70ch}
+
+/* ============ CONTACT ============ */
+.contact{padding:var(--s10) 0 var(--s9)}
+.contact .card{background:var(--ink);color:var(--paper);border-radius:var(--radius);padding:clamp(var(--s6),6vw,var(--s9))}
+.contact .mono{color:color-mix(in srgb,var(--paper) 70%,transparent)}
+.contact h2{font-size:var(--t-2xl);line-height:1.05;margin:var(--s4) 0 var(--s5);max-width:16ch}
+.contact p{color:color-mix(in srgb,var(--paper) 82%,transparent);max-width:54ch;margin-bottom:var(--s6)}
+.contact .btn{border-color:var(--paper)}
+.contact .btn.primary{background:var(--paper);color:var(--ink)}
+.contact .btn.primary:hover{background:var(--signal);border-color:var(--signal);color:var(--signal-ink)}
+.contact .btn.ghost{color:var(--paper)}
+.contact .btn.ghost:hover{background:var(--paper);color:var(--ink)}
+.contact .actions{display:flex;flex-wrap:wrap;gap:var(--s3)}
+
+/* ============ FOOTER ============ */
+footer{border-top:1px solid var(--rule);padding:var(--s6) 0 var(--s7);font-size:var(--t-sm);color:var(--ink-3)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--s3) var(--s6)}
+footer nav{display:flex;flex-wrap:wrap;gap:var(--s5)}
+footer a{color:var(--ink-2);text-decoration:none;display:inline-block;padding:var(--s2) 0}
+footer a:hover{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+
+/* ============ EXPERIENCE TIMELINE ============ */
+.timeline{border-top:1px solid var(--ink);list-style:none;margin:0;padding:0}
+.role{padding:var(--s5) 0;border-bottom:1px solid var(--rule);align-items:baseline}
+.role .when{grid-column:1/span 2;color:var(--ink-3)}
+.role .what{grid-column:3/span 5}
+.role h3{font-size:var(--t-md);line-height:1.3}
+.role .org{font-size:var(--t-sm);color:var(--ink-2);margin-top:var(--s1)}
+.role .org .mono{color:var(--ink-3);margin-left:var(--s2)}
+.role ul{grid-column:8/-1;margin:0;padding:0;list-style:none;font-size:var(--t-sm);color:var(--ink-2)}
+.role li{padding-left:var(--s4);position:relative;margin-bottom:var(--s2)}
+.role li::before{content:"";position:absolute;left:0;top:.68em;width:6px;height:1.5px;background:var(--signal)}
+.role.now .when{color:var(--signal)}
+.role.edu h3{font-weight:500}
+@media (max-width:840px){
+  .role .when,.role .what,.role ul{grid-column:1/-1}
+  .role .what{margin:var(--s2) 0 var(--s3)}
+}
+.creds{margin-top:var(--s7);gap:var(--s5)}
+.creds > div{grid-column:span 6}
+.creds h3{font-size:var(--t-sm);font-family:var(--f-mono);font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3);
+  padding-bottom:var(--s3);border-bottom:1px solid var(--ink);margin-bottom:var(--s2)}
+.creds ul{list-style:none;margin:0;padding:0}
+.creds li{display:flex;justify-content:space-between;gap:var(--s4);padding:var(--s3) 0;border-bottom:1px solid var(--rule);font-size:var(--t-sm)}
+.creds li span:last-child{color:var(--ink-3);font-family:var(--f-mono);font-size:var(--t-xs);white-space:nowrap;padding-top:2px}
+@media (max-width:840px){ .creds > div{grid-column:1/-1} .creds > div + div{margin-top:var(--s6)} }
+
+/* ============ SPEAKING ============ */
+.talks{margin-top:var(--s8);gap:var(--s5)}
+.talk{grid-column:span 6;background:var(--sheet);border:1px solid var(--rule);border-left:3px solid var(--signal);border-radius:var(--radius);padding:var(--s5);
+  transition:border-color var(--fast) var(--ease)}
+.talk:hover{border-color:var(--ink);border-left-color:var(--signal)}
+.talk .mono{color:var(--ink-3)}
+.talk h3{font-size:var(--t-md);line-height:1.3;margin:var(--s3) 0 var(--s2)}
+.talk p{font-size:var(--t-sm);color:var(--ink-2)}
+@media (max-width:840px){ .talk{grid-column:1/-1} }
+
+/* ============ MOTION ============ */
+.reveal{opacity:0;transform:translateY(12px);transition:opacity var(--med) var(--ease),transform var(--med) var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.no-js .reveal{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition-duration:0ms!important;animation-duration:0ms!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body class="no-js">
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Demian Lopes, home">Demian Lopes<span>.</span></a>
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="#work">Work</a></li>
+        <li class="hide-xs"><a href="#experience">Experience</a></li>
+        <li class="hide-sm"><a href="#capabilities">Capabilities</a></li>
+        <li class="hide-sm"><a href="#approach">Approach</a></li>
+        <li><a class="cta" href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <!-- HERO -->
+  <section class="hero" id="top" aria-labelledby="hero-title">
+    <div class="wrap grid">
+      <p class="kicker mono reveal"><span><span class="dot" aria-hidden="true"></span>Technology &amp; Risk Leader</span><span>British Columbia, Canada</span></p>
+      <h1 id="hero-title" class="reveal">I make technology risk <em>governable.</em></h1>
+      <p class="lede reveal">Nearly 20 years in technology operations, now leading governance, security compliance and AI oversight for digital banking platforms serving 15+ financial institutions. I build the controls that let leaders move fast and still pass the audit.</p>
+      <div class="actions reveal">
+        <a class="btn primary" href="#contact">Start a conversation <span class="arr" aria-hidden="true">→</span></a>
+        <a class="btn ghost" href="#work">Selected work</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="ledger" role="region" aria-label="At a glance">
+    <div class="wrap grid">
+      <div class="reveal"><span class="mono">Clients</span><b>15+</b><small>Banks and credit unions supported in production</small></div>
+      <div class="reveal"><span class="mono">Security</span><b>99.65%</b><small>Fewer vulnerabilities through automated compliance</small></div>
+      <div class="reveal"><span class="mono">Assurance</span><b>SOC 2 · 42001</b><small>Led SOC 2 Type I and ISO/IEC 42001 programs</small></div>
+      <div class="reveal"><span class="mono">Credentials</span><b>PMP</b><small>Plus ITIL, PSM I and UBC cybersecurity risk</small></div>
+    </div>
+  </div>
+
+  <!-- WORK -->
+  <section class="section" id="work" aria-labelledby="work-title">
+    <div class="wrap">
+      <div class="grid sec-head">
+        <span class="num mono">01 — Work</span>
+        <h2 id="work-title">Outcomes, not checklists.</h2>
+        <p>Name the real risk, get the right people aligned, and leave behind a system that holds up after I'm gone. Tap a case to see how.</p>
+      </div>
+
+      <div class="cases">
+        <details class="case reveal">
+          <summary>
+            <span class="idx mono">A</span>
+            <h3>SOC 2 Type I for a digital banking platform</h3>
+            <span class="outcome">Certification achieved, and security vulnerabilities cut by 99.65%.</span>
+            <span class="tog" aria-hidden="true"></span>
+            <span class="tags"><span class="tag mono">Security compliance</span><span class="tag mono">Vanta</span><span class="tag mono">TRG Mobilearth</span></span>
+          </summary>
+          <div class="sdr">
+            <div><h4 class="mono">Situation</h4><p>Banks and credit unions trusting us with their customers needed independent proof that our security, availability and confidentiality controls were real.</p></div>
+            <div><h4 class="mono">Decision</h4><p>Led the SOC 2 Type I program end to end: security policies, a risk management framework, and automated compliance workflows with continuous monitoring and evidence collection in Vanta.</p></div>
+            <div><h4 class="mono">Result</h4><p>SOC 2 Type I certification, and a 99.65% reduction in security vulnerabilities through automated monitoring and remediation.</p></div>
+          </div>
+        </details>
+
+        <details class="case reveal">
+          <summary>
+            <span class="idx mono">B</span>
+            <h3>Governing AI in banking with ISO/IEC 42001</h3>
+            <span class="outcome">An AI banking platform built on certified, responsible AI governance.</span>
+            <span class="tog" aria-hidden="true"></span>
+            <span class="tags"><span class="tag mono">AI governance</span><span class="tag mono">Responsible AI</span><span class="tag mono">Financial services</span></span>
+          </summary>
+          <div class="sdr">
+            <div><h4 class="mono">Situation</h4><p>Bringing AI into banking meant financial institutions needed assurance about privacy, data handling and how the AI would be managed over time.</p></div>
+            <div><h4 class="mono">Decision</h4><p>Led the ISO/IEC 42001 implementation to set up an AI management system: clear accountability, risk-based review, and responsible AI practices built into delivery.</p></div>
+            <div><h4 class="mono">Result</h4><p>An ISO 42001-certified AI platform for banking, recognized as AI Banking Solutions Provider of the Year at the ACQ5 Global Awards 2026.</p></div>
+          </div>
+        </details>
+
+        <details class="case reveal">
+          <summary>
+            <span class="idx mono">C</span>
+            <h3>Operations and incident response for 15+ institutions</h3>
+            <span class="outcome">C-level KPI visibility, a formal incident response plan, and 9.4% better sprint completion.</span>
+            <span class="tog" aria-hidden="true"></span>
+            <span class="tags"><span class="tag mono">Technology operations</span><span class="tag mono">ITSM</span><span class="tag mono">Jira Service Management</span></span>
+          </summary>
+          <div class="sdr">
+            <div><h4 class="mono">Situation</h4><p>Digital banking services for banks and credit unions had to stay available, with fast incident handling and leadership able to see how service was really performing.</p></div>
+            <div><h4 class="mono">Decision</h4><p>Wrote and implemented the Incident Response Plan, rebuilt service management workflows, and created executive KPI dashboards. Added project governance and workflow automation in Jira.</p></div>
+            <div><h4 class="mono">Result</h4><p>C-level visibility into service performance and team productivity, structured root cause analysis after incidents, and a 9.4% gain in sprint completion efficiency.</p></div>
+          </div>
+        </details>
+
+        <details class="case reveal">
+          <summary>
+            <span class="idx mono">D</span>
+            <h3>Modernizing infrastructure across 80 retail locations</h3>
+            <span class="outcome">~300 endpoints deployed, 40% lower deployment cost, 90% less ERP rework.</span>
+            <span class="tog" aria-hidden="true"></span>
+            <span class="tags"><span class="tag mono">Infrastructure</span><span class="tag mono">ERP</span><span class="tag mono">Change management</span></span>
+          </summary>
+          <div class="sdr">
+            <div><h4 class="mono">Situation</h4><p>A national retailer needed to replace aging endpoints, operating systems and point-of-sale hardware across 80 stores without disrupting sales.</p></div>
+            <div><h4 class="mono">Decision</h4><p>Led the program with a Change Management Committee using a plan-do-check-act cycle, coordinating vendors, operational readiness and post-launch support. Ran a new ERP rollout in parallel.</p></div>
+            <div><h4 class="mono">Result</h4><p>Nearly 300 Windows endpoints deployed, 40% lower deployment time and cost in one phase, 90% less ERP rework and 75% less time on daily tasks.</p></div>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="section" id="experience" aria-labelledby="ex-title">
+    <div class="wrap">
+      <div class="grid sec-head">
+        <span class="num mono">02 — Experience</span>
+        <h2 id="ex-title">From IT technician to governance lead.</h2>
+        <p>A career built from the server room up, across retail, ERP and digital banking, in Brazil and Canada.</p>
+      </div>
+
+      <ol class="timeline">
+        <li class="role now grid reveal">
+          <span class="when mono">2022 — Now</span>
+          <div class="what"><h3>Project Manager, Technology Operations &amp; Governance Lead</h3><p class="org">TRG Mobilearth Inc.<span class="mono">Burnaby, BC</span></p></div>
+          <ul><li>Lead delivery and operational support of digital banking for 15+ financial institutions</li><li>Led SOC 2 Type I; leading ISO/IEC 42001 AI governance</li><li>Manage incident, service request and QA/production support teams</li></ul>
+        </li>
+        <li class="role grid reveal">
+          <span class="when mono">2021 — 2022</span>
+          <div class="what"><h3>Business Analyst</h3><p class="org">TRG Mobilearth Inc.<span class="mono">Burnaby, BC</span></p></div>
+          <ul><li>Turned business strategy into a project roadmap for a digital banking platform</li><li>Refined SDLC policies and procedures to raise delivery quality</li></ul>
+        </li>
+        <li class="role edu grid reveal">
+          <span class="when mono">2020 — 2021</span>
+          <div class="what"><h3>Bachelor of Business Administration, Project Management</h3><p class="org">Yorkville University<span class="mono">GPA 3.7</span></p></div>
+          <ul><li>Full-time professional development after relocating to Canada</li></ul>
+        </li>
+        <li class="role grid reveal">
+          <span class="when mono">2013 — 2019</span>
+          <div class="what"><h3>IT Project Manager &amp; Business Analyst</h3><p class="org">Citycol<span class="mono">Rio de Janeiro</span></p></div>
+          <ul><li>Modernized infrastructure across 80 retail locations</li><li>Presented IT strategy and recommendations to C-level leadership</li></ul>
+        </li>
+        <li class="role grid reveal">
+          <span class="when mono">2013 — 2014</span>
+          <div class="what"><h3>IT Project Manager</h3><p class="org">Botswana<span class="mono">Rio de Janeiro</span></p></div>
+          <ul><li>Delivered a full Linx ERP implementation, from supply chain to POS</li><li>Built real-time omnichannel inventory across B2B, e-commerce and stores</li></ul>
+        </li>
+        <li class="role grid reveal">
+          <span class="when mono">2007 — 2012</span>
+          <div class="what"><h3>IT Manager</h3><p class="org">HSPORTS<span class="mono">Rio de Janeiro</span></p></div>
+          <ul><li>Promoted from technician to IT Manager in 18 months</li><li>Launched 13 retail stores and 3 e-commerce businesses</li><li>Cut the IT support budget by 20%</li></ul>
+        </li>
+      </ol>
+
+      <div class="grid creds">
+        <div class="reveal">
+          <h3>Certifications</h3>
+          <ul>
+            <li><span>Project Management Professional (PMP)</span><span>PMI · 2017</span></li>
+            <li><span>Agile Leadership</span><span>U. of Colorado · 2026</span></li>
+            <li><span>Micro-certificate, Cybersecurity Strategy &amp; Risk Management</span><span>UBC · 2024</span></li>
+            <li><span>Professional Scrum Master I</span><span>Scrum.org · 2022</span></li>
+            <li><span>Six Sigma Yellow Belt</span><span>VMEdu · 2018</span></li>
+            <li><span>ITIL Foundation, IT Service Management</span><span>EXIN · 2015</span></li>
+          </ul>
+        </div>
+        <div class="reveal">
+          <h3>Education</h3>
+          <ul>
+            <li><span>BBA, Project Management Specialization</span><span>Yorkville · 2021</span></li>
+            <li><span>Information Technology Management</span><span>INFNET · 2017</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAPABILITIES -->
+  <section class="section" id="capabilities" aria-labelledby="cap-title">
+    <div class="wrap">
+      <div class="grid sec-head">
+        <span class="num mono">03 — Capabilities</span>
+        <h2 id="cap-title">Where I add the most value.</h2>
+        <p>Four areas I've led across two decades, and the frameworks I work in.</p>
+      </div>
+      <div class="matrix">
+        <div class="row grid reveal"><h3>Governance &amp; risk</h3><span class="mono">Foundation</span>
+          <ul><li>Risk management frameworks</li><li>Policy &amp; standards</li><li>Executive KPI reporting</li><li>Change management</li></ul></div>
+        <div class="row grid reveal"><h3>Security compliance</h3><span class="mono">Assurance</span>
+          <ul><li>SOC 2</li><li>Vanta</li><li>Evidence automation</li><li>Vulnerability remediation</li></ul></div>
+        <div class="row grid reveal"><h3>AI governance</h3><span class="mono">Emerging risk</span>
+          <ul><li>ISO/IEC 42001</li><li>Responsible AI</li><li>AI in banking</li><li>Accountability models</li></ul></div>
+        <div class="row grid reveal"><h3>Technology operations</h3><span class="mono">Delivery</span>
+          <ul><li>Incident response</li><li>ITSM / ITIL</li><li>Jira Service Management</li><li>Agile &amp; Scrum</li><li>ERP implementation</li></ul></div>
+      </div>
+      <p class="matrix-foot">Full career history on <a href="https://www.linkedin.com/in/demianlopes" rel="noopener">LinkedIn</a>.</p>
+    </div>
+  </section>
+
+  <!-- APPROACH -->
+  <section class="section" id="approach" aria-labelledby="ap-title">
+    <div class="wrap">
+      <div class="grid sec-head">
+        <span class="num mono">04 — Approach</span>
+        <h2 id="ap-title">Three convictions.</h2>
+        <p>What I bring to a leadership table, beyond the frameworks.</p>
+      </div>
+      <div class="grid beliefs">
+        <div class="belief reveal"><span class="mono">i.</span><h3>Governance should speed things up.</h3><p>Good controls remove doubt. When people know the rules and the owners, decisions get made faster, not slower.</p></div>
+        <div class="belief reveal"><span class="mono">ii.</span><h3>Risk belongs in plain language.</h3><p>A board shouldn't need a glossary. I translate technical exposure into business impact leaders can act on.</p></div>
+        <div class="belief reveal"><span class="mono">iii.</span><h3>AI needs owners, not just policies.</h3><p>Every AI system should have a named person accountable for what it does. That's where trust starts.</p></div>
+      </div>
+
+      <div class="grid talks">
+        <article class="talk reveal">
+          <span class="mono">Speaker · ECCU Bankers' Association Conference · 2026</span>
+          <h3>Digital Transformation in the Age of Artificial Intelligence</h3>
+          <p>Governance, risk and innovation in the Eastern Caribbean banking sector.</p>
+        </article>
+        <article class="talk reveal">
+          <span class="mono">Speaker · CBUG Virtual Conference &amp; AGM · 2025</span>
+          <h3>The Future of Banking: Powered by AI</h3>
+          <p>How financial institutions can use AI to sharpen strategy and deliver more personal customer experiences.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUILDS -->
+  <section class="section" id="build" aria-labelledby="b-title">
+    <div class="wrap">
+      <div class="grid sec-head">
+        <span class="num mono">05 — Builds</span>
+        <h2 id="b-title">I build what I govern.</h2>
+        <p>Production systems I design and run myself, held to the standards I'd expect at work.</p>
+      </div>
+      <div class="grid builds">
+        <article class="build reveal">
+          <span class="mono">Automation · Alerts</span>
+          <h3>Market-signal scanner</h3>
+          <p>Rule-based screening that runs on a schedule and pushes real-time alerts when conditions are met.</p>
+          <div class="stack"><span class="mono">Python</span><span class="mono">Flask</span><span class="mono">systemd timers</span></div>
+        </article>
+        <article class="build reveal">
+          <span class="mono">Agent · Monitoring</span>
+          <h3>Price-monitoring agent</h3>
+          <p>Tracks prices against benchmarks, classifies deals, and sends alerts, with a web dashboard and native iOS client.</p>
+          <div class="stack"><span class="mono">Python</span><span class="mono">GitHub Actions</span><span class="mono">SwiftUI</span></div>
+        </article>
+        <article class="build reveal">
+          <span class="mono">Secure web app</span>
+          <h3>Private finance application</h3>
+          <p>Single sign-on restricted to approved users, encrypted off-site backups, and least-privilege service accounts.</p>
+          <div class="stack"><span class="mono">FastAPI</span><span class="mono">SQLite</span><span class="mono">OAuth</span></div>
+        </article>
+      </div>
+      <p class="builds-note">All run on cloud infrastructure behind automatic HTTPS, with sandboxed services, pinned and monitored dependencies, and scheduled security patching.</p>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact" aria-labelledby="c-title">
+    <div class="wrap">
+      <div class="card reveal">
+        <span class="mono">06 — Contact</span>
+        <h2 id="c-title">Let's talk about your technology risk.</h2>
+        <p>I'm open to Director-level roles in technology operations, IT governance and technology risk. If that's a conversation worth having, I'd be glad to hear from you.</p>
+        <div class="actions">
+          <a class="btn primary" href="mailto:demianlopes@gmail.com">Email me <span class="arr" aria-hidden="true">→</span></a>
+          <a class="btn ghost" href="https://www.linkedin.com/in/demianlopes" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Demian Lopes · British Columbia, Canada</span>
+    <nav aria-label="Footer">
+      <a href="#work">Work</a><a href="#experience">Experience</a><a href="#contact">Contact</a>
+    </nav>
+    <span>Static site · HTTPS · no trackers or cookies</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  document.body.classList.remove('no-js');
+  var els=document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return;}
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){
+        var sibs=[].slice.call(en.target.parentNode.querySelectorAll(':scope > .reveal'));
+        var i=Math.max(0,sibs.indexOf(en.target));
+        en.target.style.transitionDelay=Math.min(i*40,160)+'ms';
+        en.target.classList.add('in');io.unobserve(en.target);
+      }
+    });
+  },{rootMargin:'0px 0px -8% 0px',threshold:.08});
+  els.forEach(function(e){io.observe(e)});
+
+  // highlight current section in nav
+  var links=[].slice.call(document.querySelectorAll('.nav a[href^="#"]'));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'))}).filter(Boolean);
+  var so=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){
+        links.forEach(function(a){a.removeAttribute('aria-current')});
+        var a=document.querySelector('.nav a[href="#'+en.target.id+'"]');
+        if(a)a.setAttribute('aria-current','true');
+      }
+    });
+  },{rootMargin:'-45% 0px -50% 0px'});
+  secs.forEach(function(s){so.observe(s)});
+})();
+</script>
+</body>
+</html>
