@@ -149,7 +149,7 @@ a{color:inherit}
 .story li::before{content:"";position:absolute;left:0;top:.75em;width:10px;height:1.5px;background:var(--signal)}
 .proof{grid-column:9/-1;display:grid;gap:var(--s4);align-content:start}
 .metric{background:var(--sheet);border:1px solid var(--rule);border-radius:var(--radius);padding:var(--s5)}
-.metric b{display:block;font:600 var(--t-xl)/1 var(--f-display);letter-spacing:-.02em}
+.metric b{display:block;font:600 clamp(1.625rem,2.9vw,2.25rem)/1.05 var(--f-display);letter-spacing:-.02em}
 .metric span{display:block;margin-top:var(--s2);font-size:var(--t-sm);line-height:1.45;color:var(--ink-2)}
 .metric small{display:block;margin-top:var(--s3);padding-top:var(--s3);border-top:1px solid var(--rule);font-size:var(--t-xs);color:var(--ink-3)}
 @media (max-width:840px){
