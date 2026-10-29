@@ -133,6 +133,12 @@ a{color:inherit}
 .case-head h3{grid-column:1/span 7;font-size:var(--t-xl);line-height:1.1}
 .case-head .status{grid-column:9/-1;justify-self:end;align-self:start}
 .pill{display:inline-block;padding:6px var(--s3);border:1px solid var(--rule);border-radius:999px;font-size:var(--t-xs);font-weight:600;color:var(--ink-2);background:var(--sheet);white-space:nowrap}
+.case-head .status{display:flex;flex-direction:column;align-items:flex-end;gap:var(--s2)}
+.verify{font-size:var(--t-sm);font-weight:600;color:var(--signal);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px;
+  padding:var(--s1) 0;transition:text-decoration-thickness var(--fast) var(--ease)}
+.verify:hover{text-decoration-thickness:2px}
+.vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:840px){ .case-head .status{align-items:flex-start} }
 .pill.done{border-color:color-mix(in srgb,var(--signal) 45%,var(--rule));color:var(--signal)}
 .case-body{margin-top:var(--s6);row-gap:var(--s6)}
 .story{grid-column:1/span 7;display:grid;gap:var(--s5)}
